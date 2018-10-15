@@ -1,0 +1,4 @@
+#ifndef OBSTACULO_HPP
+#define OBSTACULO_HPP
+
+#endif // OBSTACULO_HPP
