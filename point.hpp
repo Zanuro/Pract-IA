@@ -14,42 +14,52 @@ namespace IA{
 
 class point: public pair<int,int>
 {
-public:
-    point(void):
-        pair<int,int>(0,0) {}
-
-    point(int a, int b):
-        pair<int,int>(a, b) {}
-
-    virtual ~point(void) {}
-
-    void write(ostream& os) const
-    {
-        os << setw(7) << fixed << first << " " << setw(7) << fixed << second;
-    }
-
-    void read(istream& is)
-    {
-        is >> first >> second;
-    }
-
-    inline const double get_x(void) const {return first;}
-    inline const double get_y(void) const {return first;}
-
-    inline double distance(const point& punt)
-    {
-        return round(sqrt(pow((first-punt.first),2) + pow((second - punt.second),2)));
-
-    }
+    private:
+    //Branch Miguel
+        char color_;
+    public:
+        // point(void):
+        //     pair<int,int>(0,0) {}
+    
+        point(bool accesible, int personas):
+            pair<bool,int>(accesible, personas) {}
+    
+        virtual ~point(void) {}
+    
+        void write(ostream& os) const//Diria de usar esto como un log de cada iteracion
+        {
+            if(first){//funciona si se usa el log a la hora de rastrear y no solo cuando se avanza
+                os << "No se puede acceder";
+            }
+            os << "Persona recojidas: " << second;
+        }
+    
+        // void read(istream& is)
+        // {
+        //     is >> first >> second;
+        // }
+    
+        // inline const double get_x(void) const {return first;}
+        // inline const double get_y(void) const {return first;}
+    
+    //Habria que ver si se implementa la funcion distancia y se se hace, el como.
+        // inline double distance(const point& punt)
+        // {
+        //     return round(sqrt(pow((first-punt.first),2) + pow((second - punt.second),2)));
+    
+        // }
+        
+        //Branch Miguel
+        inline auto get_color(){return color_;}
 
 };
 
 }
 
 
-istream& operator>>(istream& is, IA::point& a);
+// istream& operator>>(istream& is, IA::point& a);
 
-ostream& operator<<(ostream& os, const IA::point& a);
+// ostream& operator<<(ostream& os, const IA::point& a);
 
 
 
