@@ -12,17 +12,17 @@ using namespace std;
 
 namespace IA{
 
-class point: public pair<int,int>
+class point: public pair<bool,int>
 {
     private:
     //Branch Miguel
         char color_;
     public:
-        // point(void):
-        //     pair<int,int>(0,0) {}
+        point(void):
+            pair(0,0) {}
     
         point(bool accesible, int personas):
-            pair<bool,int>(accesible, personas) {}
+            pair(accesible, personas) {}
     
         virtual ~point(void) {}
     
@@ -50,7 +50,7 @@ class point: public pair<int,int>
         // }
         
         //Branch Miguel
-        inline auto get_color(){return color_;}
+        inline char get_color(){return color_;}
 
 };
 

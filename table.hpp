@@ -7,12 +7,11 @@
 
 namespace IA{
 
-class table:public car{ //public car no hace falta w/line 20
+class table{ //public car no hace falta w/line 20
 
     int num_col;
     int num_row;
     int n_obstacle;
-    car car_;
     //Persona pers;
     int n_pers;
     int pers_density;
@@ -26,13 +25,21 @@ public:
     void set_row(int row_){num_row=row_;}
     const int get_pos(int i,int j);
     const int get_val() const;
-    void set_percentage(int per_){perc_density=per_;}
+   // void set_percentage(int per_){perc_density=per_;}
     
     //Miguel branch
-    table(int x,int y);
+    table( int x, int y):
+        num_col(x),
+        num_row(y)
+        {
+            celda = new point*[y];//rowCount
+                for(int i = 0; i < y; ++i)//rowCount
+                celda[i] = new point[x];//colCount
+           // casilla=new celda[b][c]; <- Basicamente
+        };
     void set_pers(int person); //Nose cual es la movida con n_pers y pers_density
-    void set_car(int x, int y); //Necesario para linkear tablero y coche
-    inline auto get_color(int x,int y){return point[][].get_color();}
+    void set_car(int x, int y,table* clase); //Necesario para linkear tablero y coche
+    inline char get_color(int x,int y){return celda[x][y].get_color();}
     std::ostream& write(std::ostream& os);
 
 
@@ -40,4 +47,5 @@ public:
 
 
 }
+#include "table.cpp"
 #endif // TABLE_HPP

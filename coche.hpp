@@ -2,7 +2,7 @@
 #define COCHE_HPP
 #include <utility>
 #include <set>
-#include "point.hpp"
+//#include "point.hpp" ya declarado
 
 enum class Direction{
     north,
@@ -16,10 +16,10 @@ namespace IA {
 typedef struct grid Grid;
 struct comparate;
 
-using x_coordinate = int;
-using y_coordinate = int;
+//using x_coordinate = int; PORQUE?!?!?!?
+//using y_coordinate = int;
 
-using coordinates = std::pair<x_coordinate,y_coordinate>;
+using coordinates = std::pair<int,int>;//<x_coordinate,y_coordinate>;//PORQUEEEEEEEEEEEEEE
 
 const coordinates movement[] = {coordinates(1,0),coordinates(0,-1),coordinates(-1,0),coordinates(0,1)};
 
@@ -32,6 +32,10 @@ class car{
         int x_coordinate;
         int y_coordinate;
         int number_clients;
+        char color = 'X';
+    public:
+        class table;
+    private:
         table* map;//Esto sera usado para interaccionar con la clase table
     public:
         car(void):
@@ -46,8 +50,8 @@ class car{
     
         virtual ~car() = default;
     
-        const int get_x(void) const {return x_coordinate;}
-        const int get_y(void) const {return y_coordinate;}
+        int get_x(void) {return x_coordinate;}
+        int get_y(void) {return y_coordinate;}
     
         const int get_number_of_clients(void) const {return number_clients;}
     
@@ -75,10 +79,12 @@ class car{
         
         //Branch Miguel
         inline void add_clients(int passengers){
-            number_clients += passenger;
+            number_clients += passengers;
         }
         inline void set_tablero(table* grid){map = grid;}
         void move();//Implementar backtracking y traza
+        inline char get_color(){return color;}
+        
 
 };
 
