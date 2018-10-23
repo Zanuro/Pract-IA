@@ -32,7 +32,7 @@ class car{
         int x_coordinate;
         int y_coordinate;
         int number_clients;
-        char color = 'X';
+        char color = 'C';
     public:
         class table;
     private:

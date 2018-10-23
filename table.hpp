@@ -7,7 +7,7 @@
 
 namespace IA{
 
-class table{ //public car no hace falta w/line 20
+class table{ //public car no hace falta w/line 19
 
     int num_col;
     int num_row;
@@ -16,7 +16,7 @@ class table{ //public car no hace falta w/line 20
     int n_pers;
     int pers_density;
     point** celda;
-    car coche;
+    car* coche;
 
 public:
     const int get_col() const{return num_col;}
@@ -32,6 +32,7 @@ public:
         num_col(x),
         num_row(y)
         {
+            coche = new car();
             celda = new point*[y];//rowCount
                 for(int i = 0; i < y; ++i)//rowCount
                 celda[i] = new point[x];//colCount
@@ -39,6 +40,8 @@ public:
         };
     void set_pers(int person); //Nose cual es la movida con n_pers y pers_density
     void set_car(int x, int y,table* clase); //Necesario para linkear tablero y coche
+    void set_final(int x,int y, int z){celda[x][y].second=z;}
+    void set_obstacle(int x,int y, bool z){celda[x][y].first=z;}
     inline char get_color(int x,int y){return celda[x][y].get_color();}
     std::ostream& write(std::ostream& os);
 

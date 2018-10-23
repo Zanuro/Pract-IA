@@ -20,6 +20,9 @@ class point: public pair<bool,int>
     public:
         point(void):
             pair(0,0) {}
+            
+        point(bool accesible):
+            pair(accesible, 0) {}
     
         point(bool accesible, int personas):
             pair(accesible, personas) {}
@@ -29,9 +32,14 @@ class point: public pair<bool,int>
         void write(ostream& os) const//Diria de usar esto como un log de cada iteracion
         {
             if(first){//funciona si se usa el log a la hora de rastrear y no solo cuando se avanza
-                os << "No se puede acceder";
+                os << 'X';
+            }else if(second < 0){
+                os << "F" ;
+            }else if(second == 0){
+                os << " " ;//<< second;
+            }else if(second > 0){
+                os << "P" ;
             }
-            os << "Persona recojidas: " << second;
         }
     
         // void read(istream& is)
