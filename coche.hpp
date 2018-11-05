@@ -57,18 +57,18 @@ class car{
             number_clients = clients;
         }
         
-        inline void move_up(){
-            set_y(y_coordinate+1);
-        }
-        inline void move_down(){
-            set_y(y_coordinate-1);
-        }
-        inline void move_left(){
-            set_x(x_coordinate-1);
-        }
-        inline void move_right(){
-            set_x(x_coordinate+1);
-        }
+        // inline void move_up(){
+        //     set_y(y_coordinate+1);
+        // }
+        // inline void move_down(){
+        //     set_y(y_coordinate-1);
+        // }
+        // inline void move_left(){
+        //     set_x(x_coordinate-1);
+        // }
+        // inline void move_right(){
+        //     set_x(x_coordinate+1);
+        // }
         
         inline void add_clients(int passengers){
             number_clients += passengers;

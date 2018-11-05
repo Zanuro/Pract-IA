@@ -1,23 +1,25 @@
+#include <limits>
+
 namespace IA{
 class node:public table{//Esto sera usado para interaccionar con la clase table
     private:
+        point* tile;
+        std::vector<point*> nodos;
+        unsigned int nivel;
+    public:
         node* parent;
         node* son;
-        unsigned int x;
-        unsigned int y;
-        unsigned int nivel = 0;
-        std::vector<point*> nodos;
-    public:
         double distance;
-        node(unsigned int i,unsigned int j,double dist):
-            x(i),
-            y(j),
-            parent(NULL),
-            distance(dist){}
         
-        node(node* dad,double dist,unsigned int lev):
-            parent(dad),
+        node(point* pos):
+            tile(pos),
+            parent(NULL),
             distance(dist),
+            nivel(0){}
+        
+        node(node* dad,point* pos,unsigned int lev):
+            parent(dad),
+            tile(pos),
             nivel(lev){}
             
         
@@ -25,12 +27,12 @@ class node:public table{//Esto sera usado para interaccionar con la clase table
         
         void gen_tiles(){
             for(int i=-1;i < 2;i+=2){
-                if((x >= 0) && (x_pos < map->num_col)){
+                if((tile->x >= 0) && (tile->x < get_col())){
                     push_back(get_cell(x+i, y));
                 }
             }
             for(int i=-1;i < 2;i+=2){
-                if((y >= 0) && (y_pos < map->num_row)){
+                if((tile->y >= 0) && (tile->y < get_row())){
                     push_back(get_cell(x, y+i));
                 }
             }
@@ -38,9 +40,18 @@ class node:public table{//Esto sera usado para interaccionar con la clase table
                 i->distance = distance(i->x, i->y);
             }
         }
+        
         void gen_node(){
-            for(auto i : nodos){
-                
+            gen_node(this);
+        }
+        void gen_node(node* iter){
+            if(tile->second >= 0){
+                point* inf = new point(std::numeric_limits<double>::infinity());
+                for(auto i : nodos){
+                    if(i->distance < inf->distance)inf = i;
+                }
+                iter->son = new node(iter, inf, nivel+1);
+                gen_node(son);
             }
         }
 }

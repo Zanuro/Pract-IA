@@ -19,6 +19,10 @@ class point: public pair<bool,int>
         point(void):
             pair(0,0) {}
             
+        point(double inf):
+            distance(inf),
+            pair(0, 0) {}
+            
         point(bool accesible):
             pair(accesible, 0) {}
     
@@ -35,11 +39,11 @@ class point: public pair<bool,int>
         {
             if(first){//funciona si se usa el log a la hora de rastrear y no solo cuando se avanza
                 os << 'X' << ' ';
-            }else if(second < 0){
+            }else if(second < 0){//final
                 os << "F" << ' ';
-            }else if(second == 0){
-                os << " " << ' ';//<< second;
-            }else if(second > 0){
+            }else if(second == 0){//tierra normal
+                os << " " << ' ';
+            }else if(second > 0){//persona/s
                 os << "P" << ' ';
             }
         }
