@@ -8,46 +8,63 @@
 namespace IA{
 
 class table{ //public car no hace falta w/line 19
-
+private:
     int num_col;
     int num_row;
     int n_obstacle;
-    //Persona pers;
     int n_pers;
     int pers_density;
     point** celda;
     car* coche;
 
 public:
-    const int get_col() const{return num_col;}
-    const int get_row() const{return num_row;}
-    void set_col(int col_){num_col=col_;}
-    void set_row(int row_){num_row=row_;}
-    const int get_pos(int i,int j);
-    const int get_val() const;
-   // void set_percentage(int per_){perc_density=per_;}
+    std::pair <int,int> final;
     
-    //Miguel branch
-    table( int x, int y):
+    table(int x, int y):
         num_col(x),
         num_row(y)
         {
+            final = std::pair<int, int>(x/2, y/2);
             coche = new car();
-            celda = new point*[y];//rowCount
-                for(int i = 0; i < y; ++i)//rowCount
-                celda[i] = new point[x];//colCount
+            celda = new point*[x];//rowCount
+                for(int i = 0; i < x; ++i){//rowCount
+                    celda[i] = new point[y];}//colCount
            // casilla=new celda[b][c]; <- Basicamente
+           celda[x/2][y/2].second=-1;
+           for(int i=0;i<num_row;i++){
+        		for(int j=0;j<num_col;j++){
+        		    celda[j][i].x = j;
+        		    celda[j][i].y = i;
+        	    }
+            }
         };
+        
+    const int get_col() const{return num_col;}
+    const int get_row() const{return num_row;}
+    // void set_col(int col_){num_col=col_;}
+    // void set_row(int row_){num_row=row_;}
+    // const int get_pos(int i,int j);
+    // const int get_val() const;
+   // void set_percentage(int per_){perc_density=per_;}
+    
     void set_pers(int person); //Nose cual es la movida con n_pers y pers_density
     void set_car(int x, int y,table* clase); //Necesario para linkear tablero y coche
-    void set_final(int x,int y, int z){celda[x][y].second=z;}
-    void set_obstacle(int x,int y, bool z){celda[x][y].first=z;}
+    void set_final(int x,int y, int z);
+    inline void set_obstacle(int x,int y, bool z){celda[x][y].first=z;}
+    
     inline char get_color(int x,int y){return celda[x][y].get_color();}
+    void obstaculos_random();
+    void pasajeros_random();
+    void coche_random();
+    void meta_random();
     std::ostream& write(std::ostream& os);
-
+    inline double distance(int x, int y)
+    {
+        return sqrt(pow((final.first-x),2) + pow((final.second - y),2));
+    }
+    inline point* get_point(int x, int y){return &celda[x][y];}
 
 };
-
 
 }
 #include "table.cpp"
