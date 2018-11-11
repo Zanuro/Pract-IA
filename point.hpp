@@ -16,6 +16,7 @@ class point: public pair<bool,int>
         double distance;
         unsigned int x;
         unsigned int y;
+        bool check = false;
         point(void):
             pair(0,0) {}
             

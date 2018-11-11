@@ -2,31 +2,17 @@
 #define COCHE_HPP
 #include <utility> //pair
 #include <set>
-//#include "point.hpp" ya declarado
-
-// enum class Direction{
-//     north,
-//     south,
-//     west,
-//     east
-// };
 
 namespace IA {
 
-using coordinates = std::pair<int,int>;//<x_coordinate,y_coordinate>;
-
 class car{
-    protected:
-        /*Direction direction;
-        coordinates position;*/
+    public:
+        class table;
     private:
         int x_coordinate;
         int y_coordinate;
         int number_clients;
         char color = 'C';
-    public:
-        class table;
-    private:
         table* map;//Esto sera usado para interaccionar con la clase table
     public:
         car(void):
@@ -57,25 +43,11 @@ class car{
             number_clients = clients;
         }
         
-        // inline void move_up(){
-        //     set_y(y_coordinate+1);
-        // }
-        // inline void move_down(){
-        //     set_y(y_coordinate-1);
-        // }
-        // inline void move_left(){
-        //     set_x(x_coordinate-1);
-        // }
-        // inline void move_right(){
-        //     set_x(x_coordinate+1);
-        // }
-        
         inline void add_clients(int passengers){
             number_clients += passengers;
         }
         inline void set_tablero(table* grid){map = grid;}
-        //inline void set_node(){nodo->set_tablero((IA::no::table*)map);}
-        void move();//Implementar backtracking y traza
+        void move();
         
 
 };

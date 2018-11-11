@@ -1,8 +1,9 @@
 #include <iostream>
-#include "table.hpp"
 #include <ncurses.h>
 #include <unistd.h>
 #include <stdio.h>
+
+#include "table.hpp"
 
 using namespace std;
 //int dim=100;

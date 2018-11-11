@@ -68,4 +68,6 @@ public:
 
 }
 #include "table.cpp"
+//#include "node.cpp"
+//#include "coche.cpp"
 #endif // TABLE_HPP

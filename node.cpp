@@ -1,58 +1,91 @@
 #include <limits>
+#include <bits/stdc++.h> //para ordenar el primer valor del pair
 
 namespace IA{
-class node:public table{//Esto sera usado para interaccionar con la clase table
-    private:
+class node{//Esto sera usado para interaccionar con la clase table
+        public:
         point* tile;
-        std::vector<point*> nodos;
-        unsigned int nivel;
-    public:
+        table* map;
         node* parent;
-        node* son;
-        double distance;
+        std::vector<std::pair<double,node*>> nodos;
+        std::vector<point*> celdas;
+        unsigned int nivel;
+        double my_dist;
         
-        node(point* pos):
-            tile(pos),
+        node(point* pos, table* grid):
+            map(grid),
             parent(NULL),
-            distance(dist),
+            tile(pos),
+            my_dist(pos->distance),
             nivel(0){}
         
-        node(node* dad,point* pos,unsigned int lev):
+        node(node* dad,point* pos,unsigned int lev, table* grid):
+            map(grid),
             parent(dad),
             tile(pos),
+            my_dist(pos->distance),
             nivel(lev){}
             
         
-        inline void set_tablero(table* grid){map = grid;}
+        inline void set_tablero(table* grid){map = (IA::table*)grid;}
         
-        void gen_tiles(){
+        void gen_tiles(){//crea el vector con puntos no accedidos y accesibles ,asi no existe solapamiento
             for(int i=-1;i < 2;i+=2){
-                if((tile->x >= 0) && (tile->x < get_col())){
-                    push_back(get_cell(x+i, y));
+                if((tile->x+i >= 0) && (tile->x+i < map->get_col())){
+                    if( (!map->get_point(tile->x+i, tile->y)->first) && (!map->get_point(tile->x+i, tile->y)->check) ){//si NO hay obstaculo y NO ha sido checkeado
+                        celdas.push_back(map->get_point(tile->x+i, tile->y));
+                        map->get_point(tile->x+i, tile->y)->check = true;
+                    } 
                 }
             }
             for(int i=-1;i < 2;i+=2){
-                if((tile->y >= 0) && (tile->y < get_row())){
-                    push_back(get_cell(x, y+i));
+                if((tile->y+i >= 0) && (tile->y+i < map->get_row())){
+                    if( (!map->get_point(tile->x, tile->y+i)->first) && (!map->get_point(tile->x, tile->y+i)->check) ){
+                        celdas.push_back(map->get_point(tile->x, tile->y+i));
+                        map->get_point(tile->x, tile->y+i)->check = true;
+                    } 
                 }
             }
-            for(auto i:nodos){
-                i->distance = distance(i->x, i->y);
+            for(auto zona : celdas){
+                std::pair<double, node*> tmp;
+                tmp.first = map->distance(zona->x, zona->y);
+                tmp.second = new node(this, zona, nivel+1, map);
+                nodos.push_back(tmp);
             }
+            sort(nodos.begin(), nodos.end()); //ordena en base al primer valor
         }
         
-        void gen_node(){
-            gen_node(this);
+        std::vector<node*> A_star(){ 
+            A_star(this);
         }
-        void gen_node(node* iter){
-            if(tile->second >= 0){
-                point* inf = new point(std::numeric_limits<double>::infinity());
-                for(auto i : nodos){
-                    if(i->distance < inf->distance)inf = i;
-                }
-                iter->son = new node(iter, inf, nivel+1);
-                gen_node(son);
+        std::vector<node*> A_star(node* iter){//se generan los nodos a partir del punto mas adecuado
+            static std::vector<node*> camino;
+            static bool finish = false;
+            camino.push_back(iter);
+            if(iter->my_dist == 0) finish = true;
+            iter->gen_tiles();
+            for(auto step: nodos){
+                A_star(iter);
+                if(finish) break;
             }
+            return camino;
         }
+};
 }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

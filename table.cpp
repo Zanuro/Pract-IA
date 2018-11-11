@@ -1,4 +1,3 @@
-//#include "table.hpp"
 #include <cmath>
 
 using namespace IA;
@@ -30,6 +29,6 @@ std::ostream& table::write(std::ostream& os) {
 	    }
 	std::cout << endl; 
     }
-    //coche.move(); A implementar
+    //coche->move();
 	return os;
 }
