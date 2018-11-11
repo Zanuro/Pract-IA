@@ -1,20 +1,22 @@
 #ifndef COCHE_HPP
 #define COCHE_HPP
+#pragma once
 #include <utility> //pair
 #include <set>
 
-namespace IA {
+class table;
+//namespace IA {
 
 class car{
     public:
-        class table;
     private:
         int x_coordinate;
         int y_coordinate;
         int number_clients;
         char color = 'C';
-        table* map;//Esto sera usado para interaccionar con la clase table
+        
     public:
+        ::table* map;//Esto sera usado para interaccionar con la clase table
         car(void):
             x_coordinate(0),
             y_coordinate(0),
@@ -46,11 +48,11 @@ class car{
         inline void add_clients(int passengers){
             number_clients += passengers;
         }
-        inline void set_tablero(table* grid){map = grid;}
+        inline void set_tablero(::table* grid){map = grid;}
         void move();
         
 
 };
 
-}
+//}
 #endif // COCHE_HPP

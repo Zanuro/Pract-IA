@@ -1,12 +1,12 @@
+#ifndef TABLE_CPP
+#define TABLE_CPP
 #include <cmath>
 
-using namespace IA;
+//using namespace IA;
 
-void table::set_car(int x, int y,table* clase){
+void table::set_car(int x, int y){
     coche->set_x(x);
     coche->set_y(y);
-    //auto clase = this;//this=> * const
-    coche->set_tablero((IA::car::table*)clase);
 }
 
 void table::set_final(int x,int y, int z){
@@ -32,3 +32,4 @@ std::ostream& table::write(std::ostream& os) {
     //coche->move();
 	return os;
 }
+#endif

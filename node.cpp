@@ -1,7 +1,9 @@
+#ifndef NODE_CPP
+#define NODE_CPP
 #include <limits>
 #include <bits/stdc++.h> //para ordenar el primer valor del pair
 
-namespace IA{
+//namespace IA{
 class node{//Esto sera usado para interaccionar con la clase table
         public:
         point* tile;
@@ -27,7 +29,7 @@ class node{//Esto sera usado para interaccionar con la clase table
             nivel(lev){}
             
         
-        inline void set_tablero(table* grid){map = (IA::table*)grid;}
+        inline void set_tablero(table* grid){map = grid;}//(IA::table*)grid;}
         
         void gen_tiles(){//crea el vector con puntos no accedidos y accesibles ,asi no existe solapamiento
             for(int i=-1;i < 2;i+=2){
@@ -71,9 +73,9 @@ class node{//Esto sera usado para interaccionar con la clase table
             return camino;
         }
 };
-}
+//}
 
-
+#endif
 
 
 

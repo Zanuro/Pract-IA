@@ -106,33 +106,35 @@ int main()
     cout << "y->";
     cin >> inputy;
     
-    IA::table* mapa = new table(inputx,inputy);//tamaño mapa
-    IA::car* coche;
-    (*mapa).set_car(0,0,mapa);
+    //IA::
+    car* coche= new car(0, 0);
+    table* mapa = new table(inputx,inputy,coche);//tamaño mapa
     
     bool stay = true;
     
     while(stay){
     cout << "Escoja una opción:\nchange->cambia el valor de una casilla\nbool->crea o destrulle un obstaculo\niter->mostrar mapa\nquit->Terminar" << endl;
     cin >> opc;
-      if (opc == "change"){
-          cin >> inputx >> inputy >> inputz;
-          mapa->set_final(inputx, inputy, inputz);
+        if (opc == "change"){
+            cin >> inputx >> inputy >> inputz;
+            mapa->set_final(inputx, inputy, inputz);
         }
-      else if (opc == "bool"){
-          cin >> inputx >> inputy >> stay;
-          mapa->set_obstacle(inputx, inputy, (bool)stay);
-          stay = true;
+        else if (opc == "move"){
+            cin >> inputx >> inputy;
+            mapa->set_car(inputx, inputy);//inicio simulación o iteración
         }
-      else if (opc == "iter"){
-          mapa->write(cout);//inicio simulación o iteración
+        else if (opc == "bool"){
+            cin >> inputx >> inputy >> stay;
+            mapa->set_obstacle(inputx, inputy, (bool)stay);
+            stay = true;
         }
-      else if (opc == "quit"){
-          stay = false;
+        else if (opc == "iter"){
+            mapa->write(cout);//inicio simulación o iteración
+        }
+        else if (opc == "quit"){
+            stay = false;
         }
     }
-    // cout << mapa->get_point(3,4)->x ;
-    // cout << mapa->get_point(3,4)->y ;
     return 0;
 }
 //hacer una salida tipo: tamaño %obstaculos (solución, tiempo de computo, nodos procesados)por cada función heuristica

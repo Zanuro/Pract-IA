@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace IA{
+//namespace IA{
 
 class point: public pair<bool,int>
 {
@@ -52,6 +52,6 @@ class point: public pair<bool,int>
         inline char get_color(){return 'E';}
 };
 
-}
+//}
 
 #endif // POINT_HPP

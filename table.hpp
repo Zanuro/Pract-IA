@@ -5,7 +5,7 @@
 #include "coche.hpp"
 
 
-namespace IA{
+//namespace IA{
 
 class table{ //public car no hace falta w/line 19
 private:
@@ -14,18 +14,19 @@ private:
     int n_obstacle;
     int n_pers;
     int pers_density;
-    point** celda;
-    car* coche;
+    ::point** celda;
+    ::car* coche;
 
 public:
     std::pair <int,int> final;
     
-    table(int x, int y):
+    table(int x, int y, car* carro):
         num_col(x),
-        num_row(y)
+        num_row(y),
+        coche(carro)
         {
+            carro->set_tablero(this);
             final = std::pair<int, int>(x/2, y/2);
-            coche = new car();
             celda = new point*[x];//rowCount
                 for(int i = 0; i < x; ++i){//rowCount
                     celda[i] = new point[y];}//colCount
@@ -48,7 +49,7 @@ public:
    // void set_percentage(int per_){perc_density=per_;}
     
     void set_pers(int person); //Nose cual es la movida con n_pers y pers_density
-    void set_car(int x, int y,table* clase); //Necesario para linkear tablero y coche
+    void set_car(int x, int y); //Mueve coche
     void set_final(int x,int y, int z);
     inline void set_obstacle(int x,int y, bool z){celda[x][y].first=z;}
     
@@ -66,8 +67,8 @@ public:
 
 };
 
-}
+//}
 #include "table.cpp"
-//#include "node.cpp"
-//#include "coche.cpp"
+#include "node.cpp"
+#include "coche.cpp"
 #endif // TABLE_HPP
