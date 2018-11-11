@@ -28,8 +28,8 @@ public:
             carro->set_tablero(this);
             final = std::pair<int, int>(x/2, y/2);
             celda = new point*[x];//rowCount
-                for(int i = 0; i < x; ++i){//rowCount
-                    celda[i] = new point[y];}//colCount
+            for(int i = 0; i < x; ++i){//rowCount
+                celda[i] = new point[y];}//colCount
            // casilla=new celda[b][c]; <- Basicamente
            celda[x/2][y/2].second=-1;
            for(int i=0;i<num_row;i++){
@@ -38,6 +38,48 @@ public:
         		    celda[j][i].y = i;
         	    }
             }
+        };
+    table(ifstream &tablero, car* carro):
+        coche(carro)
+        {
+            std::string str;
+            getline(tablero, str, ' ');
+            num_col = std::stoi(str);
+            getline(tablero, str, '\n');
+            num_row = std::stoi(str);
+            
+            carro->set_tablero(this);
+            celda = new point*[num_row];//rowCount
+            for(int i = 0; i < num_row; ++i){//rowCount
+                celda[i] = new point[num_col];}//colCount
+            // casilla=new celda[b][c]; <- Basicamente
+            for(int i=0;i<num_row;i++){
+        		for(int j=0;j<num_col;j++){
+        		    celda[j][i].x = j;
+        		    celda[j][i].y = i;
+        	    }
+            }
+            int i = 0;
+            int j = 0;
+            while(!tablero.eof()) // To get you all the lines.
+            {
+	            getline(tablero, str, '\n');
+	            for(char& c : str) {
+    	            if(c == 'F')set_final(j, i, -1);
+            		else if(c == '_')celda[j][i].second = 0;
+            		else if(c == 'X')celda[j][i].first = 1;
+            		else if(c == 'P'){
+            		    int w = 0;
+            		    std::cout << "Introduzca el numero de personas en (" << j << "," << i << ")";
+            		    std::cin >> w;
+            		    celda[j][i].second = w;
+            		}
+            		if(++i == num_col)i++;
+                }
+                i=0;
+                j++;
+            }
+            tablero.close();
         };
         
     const int get_col() const{return num_col;}

@@ -43,7 +43,7 @@ class point: public pair<bool,int>
             }else if(second < 0){//final
                 os << "F" << ' ';
             }else if(second == 0){//tierra normal
-                os << " " << ' ';
+                os << "_" << ' ';
             }else if(second > 0){//persona/s
                 os << "P" << ' ';
             }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <ncurses.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -101,16 +102,23 @@ int main()
     // }
     // //wborder(win, 0, 0, 0, 0, 0, 0, 0, 0);
     
-    cout << "Introduzca el tamaño del tablero:\nx->";
-    cin >> inputx;
-    cout << "y->";
-    cin >> inputy;
-    
     //IA::
+    ifstream ifs;
+    ifs.open("map.txt");
     car* coche= new car(0, 0);
-    table* mapa = new table(inputx,inputy,coche);//tamaño mapa
+    table* mapa;
+    if (ifs.is_open()){
+        mapa = new table(ifs,coche);
+    }else{
+        cout << "Introduzca el tamaño del tablero:\nx->";
+        cin >> inputx;
+        cout << "y->";
+        cin >> inputy;
+        mapa = new table(inputx,inputy,coche);//tamaño mapa;
+    } 
     
     bool stay = true;
+    mapa->final.first;
     
     while(stay){
     cout << "Escoja una opción:\nchange->cambia el valor de una casilla\nbool->crea o destrulle un obstaculo\niter->mostrar mapa\nquit->Terminar" << endl;

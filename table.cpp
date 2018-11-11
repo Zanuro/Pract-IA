@@ -24,12 +24,12 @@ std::ostream& table::write(std::ostream& os) {
 		    if((coche->get_x()==i)&&(coche->get_y()==j)){
 		        std::cout << coche->get_color() << ' ';
 		    }else{
-				celda[j][i].write(os);
+				celda[i][j].write(os);
 		    }
 	    }
 	std::cout << endl; 
     }
-    //coche->move();
+    coche->move_Astar();
 	return os;
 }
 #endif
