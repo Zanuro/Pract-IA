@@ -50,7 +50,7 @@ class car{
             number_clients += passengers;
         }
         inline void set_tablero(::table* grid){map = grid;}
-        void move_Astar();
+        void move_euc();
         void move_rect();
         void move_lvlalg();
         

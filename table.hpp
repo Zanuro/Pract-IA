@@ -39,6 +39,9 @@ public:
         	    }
             }
             if(random){
+                std::cout << "Introduzca el numero de obstaculos:";
+                std::cin >> x;
+                obs_random(x);
                 meta_random();
             }
         };
@@ -105,8 +108,8 @@ public:
     }
     
     inline char get_color(int x,int y){return celda[x][y].get_color();}
-    void obstaculos_random();
-    void pasajeros_random();
+    void obs_random(int iter);
+    void pasa_random();
     void coche_random();
     void meta_random();
     std::ostream& write(std::ostream& os);

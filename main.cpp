@@ -152,7 +152,7 @@ int main()
         else if (opc == "iter"){
             mapa->write(std::cout);
         }
-        else if (opc == "rect"){
+        else if (opc == "rectilinear"){
             cout << "-----------------------" << endl;
             auto start = std::chrono::high_resolution_clock::now(); 
             coche->move_rect();
@@ -169,10 +169,10 @@ int main()
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
             cout << "Elapsed time: " << duration.count() << " microseconds(10^-9)" << endl;
         }
-        else if (opc == "a-star"){
+        else if (opc == "euclid"){
             cout << "-----------------------" << endl;
             auto start = std::chrono::high_resolution_clock::now(); 
-            coche->move_Astar();
+            coche->move_euc();
             auto stop = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
             cout << "Elapsed time: " << duration.count() << " microseconds(10^-9)" << endl;

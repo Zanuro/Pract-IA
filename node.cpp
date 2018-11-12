@@ -63,10 +63,10 @@ class node{//Esto sera usado para interaccionar con la clase table
             sort(nodos.begin(), nodos.end()); //ordena en base al primer valor
         }
         
-        std::pair<bool,std::vector<node*>> rect(){ 
-            return rect(this);
+        std::pair<bool,std::vector<node*>> A_euc(){ 
+            return A_euc(this);
         }
-        std::pair<bool,std::vector<node*>> rect(node* iter){//se generan los nodos a partir del punto mas adecuado
+        std::pair<bool,std::vector<node*>> A_euc(node* iter){//se generan los nodos a partir del punto mas adecuado
             static std::vector<node*> camino;
             static bool finish = false;
             camino.push_back(iter);
@@ -74,9 +74,13 @@ class node{//Esto sera usado para interaccionar con la clase table
                 finish = true;
             } 
             else iter->gen_tiles();
+            for(auto zona : iter->nodos){
+                //std::cout << zona->x << "," << zona->y << "->" << busqueda << std::endl;
+                zona.first = zona.second->tile->x + zona.second->tile->y;
+            }
             for(auto step: iter->nodos){
                 if(finish) break;
-                rect(step.second);
+                A_euc(step.second);
                 if(finish) break;
                 camino.pop_back();
             }
@@ -133,10 +137,10 @@ class node{//Esto sera usado para interaccionar con la clase table
             return result;
         }
         
-        std::pair<bool,std::vector<node*>> A_star(){ 
-            return A_star(this);
+        std::pair<bool,std::vector<node*>> A_rect(){ 
+            return A_rect(this);
         }
-        std::pair<bool,std::vector<node*>> A_star(node* iter){//se generan los nodos a partir del punto mas adecuado
+        std::pair<bool,std::vector<node*>> A_rect(node* iter){//se generan los nodos a partir del punto mas adecuado
             static std::vector<node*> camino;
             static std::vector<std::pair<double,node*>> cola;
             static bool finish = false;
@@ -152,7 +156,7 @@ class node{//Esto sera usado para interaccionar con la clase table
                 sort(cola.begin(), cola.end());
                 iter = cola.at(0).second;
                 cola.erase(cola.begin());
-                A_star(iter);
+                A_rect(iter);
             }
             node* last = camino.end()[-1];
             camino.clear();

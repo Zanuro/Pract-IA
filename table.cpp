@@ -37,19 +37,40 @@ std::ostream& table::write(std::ostream& os) {
 void table::meta_random()
 {
     srand(time(nullptr));
-    int rando = rand() ;
-    int x = num_row%rando;
-    int y = num_col%rando;
+    int xrando = rand();
+    int yrando = rand();
     bool salida = false;
     do{
-        rando = rand() ;
-        x = (num_row-1)%rando;
-        y = (num_col-1)%rando;
+        xrando = rand() ;
+        yrando = rand() ;
+        int x = xrando%(num_row-1);
+        int y = yrando%(num_col-1);
         if (celda[x][y].first != true)
         {
             set_final(x, y, -1);
             salida = true;
         }
     }while(!salida);
+}
+
+void table::obs_random(int iter)
+{
+    srand(time(nullptr));
+    for(int i = 0; i<=iter; i++){
+        int xrando = rand();
+        int yrando = rand();
+        bool salida = false;
+        do{
+            xrando = rand() ;
+            yrando = rand() ;
+            int x = xrando%(num_row-1);
+            int y = yrando%(num_col-1);
+            if (celda[x][y].first != true)
+            {
+                set_obstacle(x, y, 1);
+                salida = true;
+            }
+        }while(!salida);
+    }
 }
 #endif
