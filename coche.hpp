@@ -51,6 +51,7 @@ class car{
         }
         inline void set_tablero(::table* grid){map = grid;}
         void move_Astar();
+        void move_rect();
         void move_lvlalg();
         
 

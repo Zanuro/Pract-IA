@@ -20,7 +20,7 @@ private:
 public:
     std::pair <int,int> final;
     
-    table(int x, int y, car* carro):
+    table(int x, int y, car* carro, bool random):
         num_col(x),
         num_row(y),
         coche(carro)
@@ -37,6 +37,9 @@ public:
         		    celda[j][i].x = j;
         		    celda[j][i].y = i;
         	    }
+            }
+            if(random){
+                meta_random();
             }
         };
     table(ifstream &tablero, car* carro):

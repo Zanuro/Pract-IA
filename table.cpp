@@ -1,7 +1,6 @@
 #ifndef TABLE_CPP
 #define TABLE_CPP
 #include <cmath>
-#include <chrono>
 
 //using namespace IA;
 
@@ -32,20 +31,25 @@ std::ostream& table::write(std::ostream& os) {
 	    }
 	std::cout << endl; 
     }
-    cout << "\n-----------------------" << endl;
-    auto start = std::chrono::high_resolution_clock::now(); 
-    coche->move_Astar();
-    auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    cout << "Elapsed time: " << duration.count() << " microseconds(10^-9)" << endl;
-    
-    cout << "\n-----------------------" << endl;
-    
-    start = std::chrono::high_resolution_clock::now();
-    coche->move_lvlalg();
-    stop = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    cout << "Elapsed time: " << duration.count() << " microseconds(10^-9)" << endl;
-	return os;
+    return os;
+}
+
+void table::meta_random()
+{
+    srand(time(nullptr));
+    int rando = rand() ;
+    int x = num_row%rando;
+    int y = num_col%rando;
+    bool salida = false;
+    do{
+        rando = rand() ;
+        x = (num_row-1)%rando;
+        y = (num_col-1)%rando;
+        if (celda[x][y].first != true)
+        {
+            set_final(x, y, -1);
+            salida = true;
+        }
+    }while(!salida);
 }
 #endif

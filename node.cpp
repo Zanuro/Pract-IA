@@ -63,10 +63,10 @@ class node{//Esto sera usado para interaccionar con la clase table
             sort(nodos.begin(), nodos.end()); //ordena en base al primer valor
         }
         
-        std::pair<bool,std::vector<node*>> A_star(){ 
-            return A_star(this);
+        std::pair<bool,std::vector<node*>> rect(){ 
+            return rect(this);
         }
-        std::pair<bool,std::vector<node*>> A_star(node* iter){//se generan los nodos a partir del punto mas adecuado
+        std::pair<bool,std::vector<node*>> rect(node* iter){//se generan los nodos a partir del punto mas adecuado
             static std::vector<node*> camino;
             static bool finish = false;
             camino.push_back(iter);
@@ -76,7 +76,7 @@ class node{//Esto sera usado para interaccionar con la clase table
             else iter->gen_tiles();
             for(auto step: iter->nodos){
                 if(finish) break;
-                A_star(step.second);
+                rect(step.second);
                 if(finish) break;
                 camino.pop_back();
             }
@@ -129,6 +129,41 @@ class node{//Esto sera usado para interaccionar con la clase table
             
             std::pair<bool,std::vector<node*>> result;
             result.first = finnish;
+            result.second = camino;
+            return result;
+        }
+        
+        std::pair<bool,std::vector<node*>> A_star(){ 
+            return A_star(this);
+        }
+        std::pair<bool,std::vector<node*>> A_star(node* iter){//se generan los nodos a partir del punto mas adecuado
+            static std::vector<node*> camino;
+            static std::vector<std::pair<double,node*>> cola;
+            static bool finish = false;
+            camino.push_back(iter);
+            if(iter->my_dist == 0){
+                finish = true;
+            } 
+            else{ 
+                iter->gen_tiles();
+                for(auto gen: iter->nodos){
+                    cola.push_back(gen);
+                }
+                sort(cola.begin(), cola.end());
+                iter = cola.at(0).second;
+                cola.erase(cola.begin());
+                A_star(iter);
+            }
+            node* last = camino.end()[-1];
+            camino.clear();
+            do{
+                camino.push_back(last);
+                last = last->parent;
+            }while(last != NULL);
+            std::reverse(camino.begin(), camino.end());
+            
+            std::pair<bool,std::vector<node*>> result;
+            result.first = finish;
             result.second = camino;
             return result;
         }
