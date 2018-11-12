@@ -1,6 +1,7 @@
 #ifndef NODE_CPP
 #define NODE_CPP
 #include <limits>
+#include <queue>
 #include <bits/stdc++.h> //para ordenar el primer valor del pair
 
 //namespace IA{
@@ -58,7 +59,7 @@ class node{//Esto sera usado para interaccionar con la clase table
                 tmp.second = new node(this, zona, nivel+1, map);
                 nodos.push_back(tmp);
             }
-            busq = busqueda;
+            busq += busqueda;
             sort(nodos.begin(), nodos.end()); //ordena en base al primer valor
         }
         
@@ -83,6 +84,37 @@ class node{//Esto sera usado para interaccionar con la clase table
             }
             std::pair<bool,std::vector<node*>> result;
             result.first = finish;
+            result.second = camino;
+            return result;
+        }
+        
+        std::pair<bool,std::vector<node*>> level_alg(){ 
+            return level_alg(this);
+        }
+        std::pair<bool,std::vector<node*>> level_alg(node* iter){//se generan los nodos a partir del punto mas adecuado
+            std::vector<node*> camino;
+            bool finnish = false;
+            queue<node*> q; 
+            q.push(iter); 
+          
+            while (q.empty() == false) 
+            { 
+                node *nodo = q.front(); 
+                //std::cout << nodo->tile->x << "," << nodo->tile->y << std::endl;
+                camino.push_back(nodo);
+                if(nodo->my_dist == 0){
+                    finnish = true;
+                    break;
+                } 
+                q.pop();
+                /* Pone en cola los niveles*/
+                nodo->gen_tiles();
+                for(auto step: nodo->nodos){
+                    q.push(step.second);
+                }
+            }
+            std::pair<bool,std::vector<node*>> result;
+            result.first = finnish;
             result.second = camino;
             return result;
         }

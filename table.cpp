@@ -30,6 +30,7 @@ std::ostream& table::write(std::ostream& os) {
 	std::cout << endl; 
     }
     coche->move_Astar();
+    coche->move_lvlalg();
 	return os;
 }
 #endif

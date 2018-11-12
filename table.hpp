@@ -106,6 +106,13 @@ public:
         return sqrt(pow((final.first-x),2) + pow((final.second - y),2));
     }
     inline point* get_point(int x, int y){return &celda[x][y];}
+    void clear_points(){
+        for(int i=0;i<num_row;i++){
+        	for(int j=0;j<num_col;j++){
+        	    celda[j][i].check = false;
+        	}
+        }
+    }
 
 };
 

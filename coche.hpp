@@ -14,6 +14,7 @@ class car{
         int y_coordinate;
         int number_clients;
         char color = 'C';
+        unsigned int acc = 0;
         
     public:
         ::table* map;//Esto sera usado para interaccionar con la clase table
@@ -50,6 +51,7 @@ class car{
         }
         inline void set_tablero(::table* grid){map = grid;}
         void move_Astar();
+        void move_lvlalg();
         
 
 };

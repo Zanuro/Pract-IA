@@ -105,7 +105,7 @@ int main()
     //IA::
     ifstream ifs;
     ifs.open("map.txt");
-    car* coche= new car(0, 0);
+    car* coche= new car(0, 5);
     table* mapa;
     if (ifs.is_open()){
         mapa = new table(ifs,coche);
@@ -119,10 +119,9 @@ int main()
     
     bool stay = true;
     mapa->final.first;
-    
-    while(stay){
     cout << "Escoja una opción:\nchange->cambia el valor de una casilla\nbool->crea o destrulle un obstaculo\niter->mostrar mapa\nquit->Terminar" << endl;
-    cin >> opc;
+    while(stay){
+        cin >> opc;
         if (opc == "change"){
             cin >> inputx >> inputy >> inputz;
             mapa->set_final(inputx, inputy, inputz);
