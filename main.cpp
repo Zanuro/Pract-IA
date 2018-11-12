@@ -105,7 +105,7 @@ int main()
     //IA::
     ifstream ifs;
     ifs.open("map.txt");
-    car* coche= new car(0, 5);
+    car* coche= new car(1, 1);
     table* mapa;
     if (ifs.is_open()){
         mapa = new table(ifs,coche);
@@ -132,7 +132,7 @@ int main()
         }
         else if (opc == "bool"){
             cin >> inputx >> inputy >> stay;
-            mapa->set_obstacle(inputx, inputy, (bool)stay);
+            mapa->set_obstacle(inputx, inputy, (bool)stay/2);
             stay = true;
         }
         else if (opc == "iter"){
@@ -144,5 +144,3 @@ int main()
     }
     return 0;
 }
-//hacer una salida tipo: tamaño %obstaculos (solución, tiempo de computo, nodos procesados)por cada función heuristica
-//la solucion tiene que ser la misma

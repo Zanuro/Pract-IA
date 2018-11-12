@@ -70,10 +70,6 @@ class node{//Esto sera usado para interaccionar con la clase table
             static std::vector<node*> camino;
             static bool finish = false;
             camino.push_back(iter);
-            // for(auto ite: camino){
-            //     std::cout << ite->tile->x << "," << ite->tile->y << std::endl;
-            // }
-            // std::cout << std::endl;
             if(iter->my_dist == 0){
                 finish = true;
             } 
@@ -81,7 +77,17 @@ class node{//Esto sera usado para interaccionar con la clase table
             for(auto step: iter->nodos){
                 if(finish) break;
                 A_star(step.second);
+                if(finish) break;
+                camino.pop_back();
             }
+            node* last = camino.end()[-1];
+            camino.clear();
+            do{
+                camino.push_back(last);
+                last = last->parent;
+            }while(last != NULL);
+            std::reverse(camino.begin(), camino.end());
+            
             std::pair<bool,std::vector<node*>> result;
             result.first = finish;
             result.second = camino;
@@ -113,6 +119,14 @@ class node{//Esto sera usado para interaccionar con la clase table
                     q.push(step.second);
                 }
             }
+            node* last = camino.end()[-1];
+            camino.clear();
+            do{
+                camino.push_back(last);
+                last = last->parent;
+            }while(last != NULL);
+            std::reverse(camino.begin(), camino.end());
+            
             std::pair<bool,std::vector<node*>> result;
             result.first = finnish;
             result.second = camino;

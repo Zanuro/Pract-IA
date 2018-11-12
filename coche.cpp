@@ -14,10 +14,10 @@ void car::move_Astar(){
     }
     else std::cout << "No se ha encontrado solucion.\n";
     for(auto tiles: solucion.second){
-        //std::cout << tiles->tile->x << "," << tiles->tile->y << std::endl;
+        std::cout << tiles->tile->x << "," << tiles->tile->y << std::endl;
         camino.push_back(tiles->tile);
     }
-    std::cout << "nodos recorridos:" << solucion.second.end()[-2]->busq - acc << "\n";
+    std::cout << "nodos recorridos:" << solucion.second.end()[-2]->busq - acc << " en " << solucion.second.size() << " pasos.\n";
     acc = solucion.second.end()[-2]->busq;
 }
 
@@ -33,10 +33,10 @@ void car::move_lvlalg(){
     }
     else std::cout << "No se ha encontrado solucion.\n";
     for(auto tiles: solucion.second){
-        //std::cout << tiles->tile->x << "," << tiles->tile->y << std::endl;
+        std::cout << tiles->tile->x << "," << tiles->tile->y << std::endl;
         camino.push_back(tiles->tile);
     }
-    std::cout << "nodos recorridos:" << solucion.second.end()[-2]->busq - acc << "\n";
+    std::cout << "nodos recorridos:" << solucion.second.end()[-2]->busq - acc << " en " << solucion.second.size() << " pasos.\n";
     acc = solucion.second.end()[-2]->busq;
 }
 #endif

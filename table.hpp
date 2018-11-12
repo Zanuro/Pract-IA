@@ -11,7 +11,7 @@ class table{ //public car no hace falta w/line 19
 private:
     int num_col;
     int num_row;
-    int n_obstacle;
+    double obstacles = 0;
     int n_pers;
     int pers_density;
     ::point** celda;
@@ -67,7 +67,10 @@ public:
 	            for(char& c : str) {
     	            if(c == 'F')set_final(j, i, -1);
             		else if(c == '_')celda[j][i].second = 0;
-            		else if(c == 'X')celda[j][i].first = 1;
+            		else if(c == 'X'){ 
+            		    celda[j][i].first = 1;
+            		    obstacles++;
+            		}
             		else if(c == 'P'){
             		    int w = 0;
             		    std::cout << "Introduzca el numero de personas en (" << j << "," << i << ")";
@@ -93,7 +96,10 @@ public:
     void set_pers(int person); //Nose cual es la movida con n_pers y pers_density
     void set_car(int x, int y); //Mueve coche
     void set_final(int x,int y, int z);
-    inline void set_obstacle(int x,int y, bool z){celda[x][y].first=z;}
+    void set_obstacle(int x,int y, bool z){
+        celda[x][y].first=z;
+        if(z) obstacles++;
+    }
     
     inline char get_color(int x,int y){return celda[x][y].get_color();}
     void obstaculos_random();
