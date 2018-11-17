@@ -1,6 +1,7 @@
 #ifndef TABLE_CPP
 #define TABLE_CPP
 #include <cmath>
+#include <algorithm>
 
 //using namespace IA;
 
@@ -19,12 +20,16 @@ void table::set_final(int x,int y, int z){
 }
 
 std::ostream& table::write(std::ostream& os) {
-	std::cout << "Tamaño " << num_row << "x" << num_col << std::endl;
-	std::cout << "Obstaculos " << obstacles/(num_row*num_col)*100 << "%" << std::endl;
+	std::cout <<"\033[32m"<< "Tamaño " << num_row << "x" << num_col << "\033[0m" << std::endl;
+	std::cout <<"\033[32m"<< "Obstaculos " << obstacles/(num_row*num_col)*100 << "%" << "\033[0m" << std::endl;
     for(int i=0;i<num_row;i++){
 		for(int j=0;j<num_col;j++){
 		    if((coche->get_x()==i)&&(coche->get_y()==j)){
 		        std::cout << coche->get_color() << ' ';
+		    }else if(std::find(path.begin(), path.end(), std::make_pair((unsigned int)i,(unsigned int)j) ) != path.end()){
+		        std::cout << "\033[1;43m"<< "~ " << "\033[0m";
+		    }else if(celda[i][j].check){
+		        std::cout << "o ";
 		    }else{
 				celda[i][j].write(os);
 		    }

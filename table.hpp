@@ -1,6 +1,7 @@
 #ifndef TABLE_HPP
 #define TABLE_HPP
 #pragma once
+#include<vector>
 #include "point.hpp"
 #include "coche.hpp"
 
@@ -18,6 +19,7 @@ private:
     ::car* coche;
 
 public:
+    std::vector<std::pair<unsigned int,unsigned int>> path;
     std::pair <int,int> final;
     
     table(int x, int y, car* carro, bool random):

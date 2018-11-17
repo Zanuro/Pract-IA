@@ -111,29 +111,31 @@ int main()
     table* mapa;
     car* coche= new car(1, 1);
     //IA::
-    cout << "Escoja una opción:\nfile->abrir fichero\nnormal->tablero por defecto\nrand->generar valor" << endl;
+    cout << "\033[32m"<< "Escoja una opción:\nfile->abrir fichero\nnormal->tablero por defecto\nrand->generar valor" <<"\033[0m"<< endl;
         cin >> opc;
         if (opc == "file"){
             ifstream ifs;
             ifs.open("map.txt");
             mapa = new table(ifs,coche);
         }else if (opc == "normal"){
-            cout << "Introduzca el tamaño del tablero:\nx->";
+            cout << "\033[32m"<< "Introduzca el tamaño del tablero:\nx->";
             cin >> inputx;
             cout << "y->";
             cin >> inputy;
+            cout << "\033[0m";
             mapa = new table(inputx,inputy,coche,false);//tamaño mapa;
         }else if (opc == "rand"){
-            cout << "Introduzca el tamaño del tablero:\nx->";
+            cout << "\033[32m"<<"Introduzca el tamaño del tablero:\nx->";
             cin >> inputx;
             cout << "y->";
             cin >> inputy;
+            cout << "\033[0m";
             mapa = new table(inputx,inputy,coche,true);
-        }else cout << "error";
+        }else cout <<"\033[31m" << "error" << "\033[0m";
     
     bool stay = true;
     mapa->final.first;
-    cout << "Escoja una opción:\nchange->cambia el valor de una casilla\nbool->crea o destruye un obstaculo\niter->mostrar mapa\nquit->Terminar" << endl;
+    cout << "\033[32m" <<"Escoja una opción:\nchange->cambia el valor de una casilla\nbool->crea o destruye un obstaculo\niter->mostrar mapa\n>rectilinear\n>euclid\n>level\nquit->Terminar" << "\033[0m"<< endl;
     while(stay){
         cin >> opc;
         if (opc == "change"){
@@ -158,7 +160,7 @@ int main()
             coche->move_rect();
             auto stop = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-            cout << "Elapsed time: " << duration.count() << " microseconds(10^-9)" << endl;
+            cout << "\033[32m"<<"Elapsed time: " << duration.count() << " microseconds(10^-9)" << "\033[0m"<< endl;
             
         }
         else if (opc == "level"){
@@ -167,7 +169,7 @@ int main()
             coche->move_lvlalg();
             auto stop = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-            cout << "Elapsed time: " << duration.count() << " microseconds(10^-9)" << endl;
+            cout << "\033[32m"<<"Elapsed time: " << duration.count() << " microseconds(10^-9)" << "\033[0m"<< endl;
         }
         else if (opc == "euclid"){
             cout << "-----------------------" << endl;
@@ -175,7 +177,7 @@ int main()
             coche->move_euc();
             auto stop = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-            cout << "Elapsed time: " << duration.count() << " microseconds(10^-9)" << endl;
+            cout << "\033[32m"<<"Elapsed time: " << duration.count() << " microseconds(10^-9)" << "\033[0m"<< endl;
             
         }
         else if (opc == "quit"){

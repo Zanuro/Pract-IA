@@ -39,13 +39,13 @@ class point: public pair<bool,int>
         void write(ostream& os) const//Diria de usar esto como un log de cada iteracion
         {
             if(first){//funciona si se usa el log a la hora de rastrear y no solo cuando se avanza
-                os << 'X' << ' ';
+                os << "\033[31m" <<'X' << ' ' << "\033[0m";
             }else if(second < 0){//final
-                os << "F" << ' ';
+                os  << "F" << ' ' ;
             }else if(second == 0){//tierra normal
-                os << "_" << ' ';
+                os << "\033[36m" << "_" << ' ' << "\033[0m";
             }else if(second > 0){//persona/s
-                os << "P" << ' ';
+                os << "\033[35m" << "P" << ' ' << "\033[0m";
             }
         }
         

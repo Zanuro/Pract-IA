@@ -3,6 +3,7 @@
 #include <limits>
 #include <queue>
 #include <bits/stdc++.h> //para ordenar el primer valor del pair
+#include <algorithm>
 
 //namespace IA{
 class node{//Esto sera usado para interaccionar con la clase table
@@ -57,33 +58,50 @@ class node{//Esto sera usado para interaccionar con la clase table
                 //std::cout << zona->x << "," << zona->y << "->" << busqueda << std::endl;
                 tmp.first = map->distance(zona->x, zona->y);
                 tmp.second = new node(this, zona, nivel+1, map);
+                tmp.second->my_dist = tmp.first;
                 nodos.push_back(tmp);
             }
             busq += busqueda;
             sort(nodos.begin(), nodos.end()); //ordena en base al primer valor
         }
         
+        static bool ValueCmp(const node * a, const node * b)
+        { 
+            //if(a->my_dist<b->my_dist) std::cout << a->my_dist << "<" << b->my_dist << "  true\n";
+            //return a->my_dist < b->my_dist; 
+            return isless(a->my_dist,b->my_dist);
+        }
         std::pair<bool,std::vector<node*>> A_euc(){ 
             return A_euc(this);
         }
-        std::pair<bool,std::vector<node*>> A_euc(node* iter){//se generan los nodos a partir del punto mas adecuado
+        std::pair<bool,std::vector<node*>> A_euc(node* iter){
             static std::vector<node*> camino;
             static bool finish = false;
-            camino.push_back(iter);
-            if(iter->my_dist == 0){
-                finish = true;
-            } 
-            else iter->gen_tiles();
-            for(auto zona : iter->nodos){
-                //std::cout << zona->x << "," << zona->y << "->" << busqueda << std::endl;
-                zona.first = zona.second->tile->x + zona.second->tile->y;
+            vector<node*> q; 
+            q.push_back(iter);
+            
+            while (q.empty() == false) 
+            { 
+                std::sort(q.begin(), q.end(), node::ValueCmp);//usa la función ValueCmp
+                node *nodo = q.front(); 
+               // std::cout << nodo->my_dist <<"\n";
+                camino.push_back(nodo);
+                if(nodo->my_dist == 0){
+                    finish = true;
+                    break;
+                } 
+                q.erase(q.begin());
+                
+                nodo->gen_tiles();
+                for(auto at : nodo->nodos){
+                    at.second->my_dist = (abs((int)map->final.first - (int)at.second->tile->x) + abs((int)map->final.second - (int)at.second->tile->y));
+                }
+                
+                for(auto step: nodo->nodos){
+                    q.push_back(step.second);
+                }
             }
-            for(auto step: iter->nodos){
-                if(finish) break;
-                A_euc(step.second);
-                if(finish) break;
-                camino.pop_back();
-            }
+            
             node* last = camino.end()[-1];
             camino.clear();
             do{
@@ -101,7 +119,7 @@ class node{//Esto sera usado para interaccionar con la clase table
         std::pair<bool,std::vector<node*>> level_alg(){ 
             return level_alg(this);
         }
-        std::pair<bool,std::vector<node*>> level_alg(node* iter){//se generan los nodos a partir del punto mas adecuado
+        std::pair<bool,std::vector<node*>> level_alg(node* iter){
             std::vector<node*> camino;
             bool finnish = false;
             queue<node*> q; 
@@ -110,7 +128,6 @@ class node{//Esto sera usado para interaccionar con la clase table
             while (q.empty() == false) 
             { 
                 node *nodo = q.front(); 
-                //std::cout << nodo->tile->x << "," << nodo->tile->y << std::endl;
                 camino.push_back(nodo);
                 if(nodo->my_dist == 0){
                     finnish = true;
@@ -140,30 +157,41 @@ class node{//Esto sera usado para interaccionar con la clase table
         std::pair<bool,std::vector<node*>> A_rect(){ 
             return A_rect(this);
         }
-        std::pair<bool,std::vector<node*>> A_rect(node* iter){//se generan los nodos a partir del punto mas adecuado
+        std::pair<bool,std::vector<node*>> A_rect(node* iter){
             static std::vector<node*> camino;
-            static std::vector<std::pair<double,node*>> cola;
             static bool finish = false;
-            camino.push_back(iter);
-            if(iter->my_dist == 0){
-                finish = true;
-            } 
-            else{ 
-                iter->gen_tiles();
-                for(auto gen: iter->nodos){
-                    cola.push_back(gen);
+            vector<node*> q; 
+            q.push_back(iter); 
+          
+            while (q.empty() == false) 
+            { 
+                std::sort(q.begin(), q.end(), node::ValueCmp);
+                node *nodo = q.front(); 
+                q.erase(q.begin());
+                camino.push_back(nodo);
+                if(nodo->my_dist == 0){
+                    finish = true;
+                    break;
+                } 
+                
+                nodo->gen_tiles();
+                for(auto at : nodo->nodos){
+                    at.second->my_dist = abs(sqrt(pow((map->final.first),2) + pow((map->final.second ),2)) - sqrt(pow(at.second->tile->x,2) + pow(at.second->tile->y,2)));
+                    //at.second->my_dist = sqrt(pow((map->final.first - at.second->tile->x),2) + pow((map->final.second - at.second->tile->y),2));//esto esta maaal
                 }
-                sort(cola.begin(), cola.end());
-                iter = cola.at(0).second;
-                cola.erase(cola.begin());
-                A_rect(iter);
+                
+                for(auto step: nodo->nodos){
+                    q.push_back(step.second);
+                }
             }
+            
             node* last = camino.end()[-1];
             camino.clear();
             do{
                 camino.push_back(last);
                 last = last->parent;
             }while(last != NULL);
+            
             std::reverse(camino.begin(), camino.end());
             
             std::pair<bool,std::vector<node*>> result;
@@ -173,6 +201,34 @@ class node{//Esto sera usado para interaccionar con la clase table
         }
 };
 //}
+            //euclid
+            // if(iter->my_dist == 0){
+            //     finish = true;
+            // } 
+            // else iter->gen_tiles();
+            // for(auto zona : iter->nodos){
+            //     zona.first = zona.second->tile->x + zona.second->tile->y;
+            // }
+            // for(auto step: iter->nodos){
+            //     if(finish) break;
+            //     A_euc(step.second);
+            //     if(finish) break;
+            //     camino.pop_back();
+            // }
+            //rectilinear
+            // if(iter->my_dist == 0){
+            //     finish = true;
+            // } 
+            // else{ 
+            //     iter->gen_tiles();
+            //     for(auto gen: iter->nodos){
+            //         cola.push_back(gen);
+            //     }
+            //     sort(cola.begin(), cola.end());
+            //     iter = cola.at(0).second;
+            //     cola.erase(cola.begin());
+            //     A_rect(iter);
+            // }
 
 #endif
 
