@@ -10,8 +10,6 @@
 
 class table{ //public car no hace falta w/line 19
 private:
-    int num_col;
-    int num_row;
     double obstacles = 0;
     int n_pers;
     int pers_density;
@@ -19,6 +17,8 @@ private:
     ::car* coche;
 
 public:
+    int num_col;
+    int num_row;
     std::vector<std::pair<unsigned int,unsigned int>> path;
     std::pair <int,int> final;
     
@@ -117,7 +117,7 @@ public:
     std::ostream& write(std::ostream& os);
     inline double distance(int x, int y)
     {
-        return sqrt(pow((final.first-x),2) + pow((final.second - y),2));
+        return abs(final.first - x) + abs(final.second - y);
     }
     inline point* get_point(int x, int y){return &celda[x][y];}
     void clear_points(){

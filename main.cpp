@@ -115,7 +115,7 @@ int main()
         cin >> opc;
         if (opc == "file"){
             ifstream ifs;
-            ifs.open("map.txt");
+            ifs.open("map2.txt");
             mapa = new table(ifs,coche);
         }else if (opc == "normal"){
             cout << "\033[32m"<< "Introduzca el tamaño del tablero:\nx->";
@@ -134,7 +134,7 @@ int main()
         }else cout <<"\033[31m" << "error" << "\033[0m";
     
     bool stay = true;
-    mapa->final.first;
+    cout << mapa->final.first << "," <<mapa->final.second << endl;
     cout << "\033[32m" <<"Escoja una opción:\nchange->cambia el valor de una casilla\nbool->crea o destruye un obstaculo\niter->mostrar mapa\n>rectilinear\n>euclid\n>level\nquit->Terminar" << "\033[0m"<< endl;
     while(stay){
         cin >> opc;
@@ -152,7 +152,7 @@ int main()
             stay = true;
         }
         else if (opc == "iter"){
-            mapa->write(std::cout);
+          mapa->write(std::cout);
         }
         else if (opc == "rectilinear"){
             cout << "-----------------------" << endl;

@@ -51,6 +51,7 @@ void car::move_euc(){
         std::cout << "Solución: (" << solucion.second.end()[-1]->tile->x << "," << solucion.second.end()[-1]->tile->y << ")" << "\n";
         for(auto tiles: solucion.second){
             //std::cout << tiles->tile->x << "," << tiles->tile->y << std::endl;
+            //std::cout << tiles->my_dist << std::endl;
             map->path.push_back(std::make_pair(tiles->tile->x,tiles->tile->y));
         }
         std::cout << "nodos recorridos:" << solucion.second.end()[-2]->busq - acc << "\nCamino en " << solucion.second.size() << " pasos.\n";
